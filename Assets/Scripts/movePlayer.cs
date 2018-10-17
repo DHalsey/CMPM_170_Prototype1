@@ -55,4 +55,12 @@ public class movePlayer : MonoBehaviour {
             rb.AddForce(Vector2.down*movementSpeed * Time.deltaTime);
         }
     }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("PickUp"))
+        {
+            other.gameObject.SetActive(false);
+        }
+    }
 }
