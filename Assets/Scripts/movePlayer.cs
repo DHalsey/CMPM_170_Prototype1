@@ -7,7 +7,7 @@ public class movePlayer : MonoBehaviour {
     private Rigidbody2D rb; //the rigidbody of the player
     private SpriteRenderer sr; //the sprite renderer of the player
     private bool keyLeft, keyRight, keyUp, keyDown;
-    private float movementSpeed = 20.0f;
+    private float movementSpeed = 4000.0f;
 	// Use this for initialization
 	void Start () {
         rb = GetComponent<Rigidbody2D>();
@@ -41,17 +41,18 @@ public class movePlayer : MonoBehaviour {
     //Note that you should ALWAYS move a player by using it's rigidbody, NOT it's position.
     //if you move the player's position instead, physics go whack
     void MovePlayer() {
+        //speeds are multiplied by delta time to guarantee same movement speed regardless of fps
         if (keyLeft == true) {
-            rb.AddForce(Vector2.left*movementSpeed);
+            rb.AddForce(Vector2.left * movementSpeed * Time.deltaTime);
         }
         if (keyRight == true) {
-            rb.AddForce(Vector2.right*movementSpeed);
+            rb.AddForce(Vector2.right*movementSpeed * Time.deltaTime);
         }
         if (keyUp == true) {
-            rb.AddForce(Vector2.up*movementSpeed);
+            rb.AddForce(Vector2.up*movementSpeed * Time.deltaTime);
         }
         if (keyDown == true) {
-            rb.AddForce(Vector2.down*movementSpeed);
+            rb.AddForce(Vector2.down*movementSpeed * Time.deltaTime);
         }
     }
 }
