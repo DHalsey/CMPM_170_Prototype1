@@ -20,7 +20,6 @@ public class movePlayer : MonoBehaviour {
 	void Update () {
         GetInputs(); //gets the player inputs
         MovePlayer();
-        onGUI();
         //sr.sortingOrder = -(int)(transform.position.y*5); //This line SHOULD fix draw order issues but doesnt. IDK why - Dustin
 	}
 
@@ -67,11 +66,9 @@ public class movePlayer : MonoBehaviour {
             {
                 other.gameObject.SetActive(false);
                 player1score++;
-                onGUI();
             } else if (player == 2) {
                 other.gameObject.SetActive(false);
                 player2score++;
-                onGUI;
             }
         }
     }
