@@ -8,6 +8,8 @@ public class movePlayer : MonoBehaviour {
     private SpriteRenderer sr; //the sprite renderer of the player
     private bool keyLeft, keyRight, keyUp, keyDown;
     private float movementSpeed = 4000.0f;
+    public int player1score, player2score;
+
 	// Use this for initialization
 	void Start () {
         rb = GetComponent<Rigidbody2D>();
@@ -60,7 +62,20 @@ public class movePlayer : MonoBehaviour {
     {
         if (other.gameObject.CompareTag("PickUp"))
         {
-            other.gameObject.SetActive(false);
+            if (player == 1)
+            {
+                other.gameObject.SetActive(false);
+                player1score++;
+            } else if (player == 2) {
+                other.gameObject.SetActive(false);
+                player2score++;
+            }
         }
     }
+
+    private void onGUI() {
+        GUI.Label(new Rect(10, 10, 100, 20), "Score: " + player1score);
+        GUI.Label(new Rect(100, 10, 100, 20), "Score: " + player2score);
+    }
+
 }
