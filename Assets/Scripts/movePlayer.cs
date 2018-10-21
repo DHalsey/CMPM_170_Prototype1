@@ -9,12 +9,15 @@ public class movePlayer : MonoBehaviour {
     private bool keyLeft, keyRight, keyUp, keyDown;
     private float movementSpeed = 4000.0f;
     public int player1score, player2score;
+    private GameObject p1, p2;
 
 	// Use this for initialization
 	void Start () {
         rb = GetComponent<Rigidbody2D>();
         sr = GetComponent<SpriteRenderer>();
-	}
+        p1 = GameObject.Find("player1");
+        p2 = GameObject.Find("player2");
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -64,18 +67,31 @@ public class movePlayer : MonoBehaviour {
         {
             if (player == 1)
             {
-                other.gameObject.SetActive(false);
+                other.gameObject.GetComponent<BoxCollider2D>().enabled = false;
+                other.gameObject.GetComponent<SpriteRenderer>().enabled = false;
+                other.gameObject.GetComponent<itemScript>().timer = Random.Range(10, 20);
                 player1score++;
+                p1.GetComponent<PlayerValues>().percentage -= 10;
+                p2.GetComponent<PlayerValues>().percentage += 10;
             } else if (player == 2) {
-                other.gameObject.SetActive(false);
+                other.gameObject.GetComponent<BoxCollider2D>().enabled = false;
+                other.gameObject.GetComponent<SpriteRenderer>().enabled = false;
+                other.gameObject.GetComponent<itemScript>().timer = Random.Range(10, 20);
                 player2score++;
+                p1.GetComponent<PlayerValues>().percentage += 10;
+                p2.GetComponent<PlayerValues>().percentage -= 10;
             }
         }
     }
 
-    private void onGUI() {
-        GUI.Label(new Rect(10, 10, 100, 20), "Score: " + player1score);
-        GUI.Label(new Rect(100, 10, 100, 20), "Score: " + player2score);
+    private void OnGUI() {
+        if (player == 1)
+        {
+            GUI.Label(new Rect(10, 10, 100, 20), "Score: " + player1score);
+        }
+        else if (player == 2)
+        {
+            GUI.Label(new Rect(100, 10, 100, 20), "Score: " + player2score);
+        }
     }
-
 }

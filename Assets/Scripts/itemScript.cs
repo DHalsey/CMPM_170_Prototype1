@@ -6,6 +6,7 @@ public class itemScript : MonoBehaviour {
 
     private GameObject player1;
     private GameObject player2;
+    public float timer = 0;
 
     // Use this for initialization
     void Start () {
@@ -16,6 +17,14 @@ public class itemScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         transform.Rotate(new Vector3(0, 0, 45) * Time.deltaTime);
+        if (timer > 0)
+        {
+            timer -= Time.deltaTime;
+        }
+        else if (timer <= 0){
+            this.gameObject.GetComponent<BoxCollider2D>().enabled = true;
+            this.gameObject.GetComponent<SpriteRenderer>().enabled = true;
+        }
     }
 
    /* private void OnTriggerEnter2D(Collider other)
