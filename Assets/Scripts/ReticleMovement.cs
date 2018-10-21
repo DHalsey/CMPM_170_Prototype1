@@ -6,6 +6,7 @@ public class ReticleMovement : MonoBehaviour {
 
     // Base speed for the reticle. Multiplied by calculated values based on player percents.
     public float BaseMoveSpeed = 0.5f;
+    public float timer = 0;
 
     // Stores certain player values.
     private int p1percent;
@@ -39,6 +40,7 @@ public class ReticleMovement : MonoBehaviour {
         // Get self components
         rb = GetComponent<Rigidbody2D>();
         tf = GetComponent<Transform>();
+        timer = 30;
     }
 	
 	// Update is called once per frame
@@ -50,8 +52,30 @@ public class ReticleMovement : MonoBehaviour {
         p1loc = p1obj.transform.position;
         p2loc = p2obj.transform.position;
         forceModVertical = BaseMoveSpeed * ((Mathf.Sign(tf.position.y - p1loc.y) * p1percent) + (Mathf.Sign(tf.position.y - p2loc.y) * p2percent));
-        forceModHorizontal = BaseMoveSpeed * ((Mathf.Sign(tf.position.x - p2loc.x) * p1percent) + (Mathf.Sign(tf.position.x - p2loc.x) * p2percent));
+        forceModHorizontal = BaseMoveSpeed * ((Mathf.Sign(tf.position.x - p1loc.x) * p1percent) + (Mathf.Sign(tf.position.x - p2loc.x) * p2percent));
         rb.AddForce(Vector2.left * forceModHorizontal * Time.deltaTime);
         rb.AddForce(Vector2.down * forceModVertical * Time.deltaTime);
+
+        if (timer > 0)
+        {
+            timer -= Time.deltaTime;
+        }
+        else if (timer <= 0)
+        {
+            timer = 30;
+        }
+    }
+
+    // Timer
+    private void OnGUI() {
+        GUI.Label(new Rect(1000, 10, 100, 20), "" + timer);
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (timer <= 0.1)
+        {
+            Destroy(collision.gameObject);
+        }
     }
 }
