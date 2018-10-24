@@ -15,7 +15,7 @@ public class moveCamera : MonoBehaviour {
         playerList = GameObject.FindGameObjectsWithTag("Player"); //adds all players with the tag "Player" to a list
         
         for (int i = 0; i < playerList.Length; i++) {
-            Debug.Log(playerList[i]);
+            //Debug.Log(playerList[i]);
         }
 	}
 	
@@ -33,7 +33,7 @@ public class moveCamera : MonoBehaviour {
     private void Zoom() {
         Vector3 zoomPad = new Vector3(cameraEdgePadding, cameraEdgePadding, 0);
         float newZoom = Mathf.Lerp(minZoom, maxZoom, GetGreatestDistance() /maxZoom) + cameraEdgePadding;
-        Debug.Log(newZoom);
+        //Debug.Log(newZoom);
         cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, newZoom, 0.02f);
     }
 
