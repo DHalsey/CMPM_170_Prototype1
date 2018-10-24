@@ -71,15 +71,13 @@ public class movePlayer : MonoBehaviour {
                 other.gameObject.GetComponent<SpriteRenderer>().enabled = false;
                 other.gameObject.GetComponent<itemScript>().timer = Random.Range(10, 20);
                 player1score++;
-                p1.GetComponent<PlayerValues>().percentage -= 10;
-                p2.GetComponent<PlayerValues>().percentage += 10;
+                if (p1.GetComponent<PlayerValues>().percentage - 10 > 0) { p1.GetComponent<PlayerValues>().percentage -= 10; } else { p1.GetComponent<PlayerValues>().percentage = 0; }
             } else if (player == 2) {
                 other.gameObject.GetComponent<BoxCollider2D>().enabled = false;
                 other.gameObject.GetComponent<SpriteRenderer>().enabled = false;
                 other.gameObject.GetComponent<itemScript>().timer = Random.Range(10, 20);
                 player2score++;
-                p1.GetComponent<PlayerValues>().percentage += 10;
-                p2.GetComponent<PlayerValues>().percentage -= 10;
+                if (p2.GetComponent<PlayerValues>().percentage - 10 > 0) { p2.GetComponent<PlayerValues>().percentage -= 10; } else { p2.GetComponent<PlayerValues>().percentage = 0; }
             }
         }
     }
@@ -87,11 +85,11 @@ public class movePlayer : MonoBehaviour {
     private void OnGUI() {
         if (player == 1)
         {
-            GUI.Label(new Rect(10, 10, 100, 20), "Score: " + player1score);
+            GUI.Label(new Rect(10, 10, 100, 20), "Percentage: " + p1.GetComponent<PlayerValues>().percentage);
         }
         else if (player == 2)
         {
-            GUI.Label(new Rect(100, 10, 100, 20), "Score: " + player2score);
+            GUI.Label(new Rect(100, 10, 100, 20), "Percentage: " + p2.GetComponent<PlayerValues>().percentage);
         }
     }
 }

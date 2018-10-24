@@ -5,22 +5,20 @@ using UnityEngine;
 public class ReticleMovement : MonoBehaviour {
 
     // Base speed for the reticle. Multiplied by calculated values based on player percents.
-    public float BaseMoveSpeed = 0.5f;
+    public float BaseMoveSpeed = 1f;
     public float timer = 0;
 
     // Stores certain player values.
-    private int p1percent;
-    private int p2percent;
     private GameObject p1obj;
     private GameObject p2obj;
-    private PlayerValues p1vals;
-    private PlayerValues p2vals;
-    private Vector3 p1loc;
-    private Vector3 p2loc;
+
+    // List of players to be tracked
+    private List<GameObject> playerObjectList = new List<GameObject>();
 
     // Reticle Values
     private float forceModVertical;
     private float forceModHorizontal;
+    private int HighestPercent;
     private Rigidbody2D rb;
     private Transform tf;
 
@@ -28,15 +26,9 @@ public class ReticleMovement : MonoBehaviour {
     void Start () {
         // Get player objects
         p1obj = GameObject.Find("player1");
+        if (p1obj != null) { playerObjectList.Add(p1obj); }
         p2obj = GameObject.Find("player2");
-        // Get their value scripts
-        p1vals = p1obj.GetComponent<PlayerValues>();
-        p2vals = p2obj.GetComponent<PlayerValues>();
-        // Create initial references to each player's percentage and location, probably avoids a null error somewhere
-        p1percent = p1vals.percentage;
-        p2percent = p2vals.percentage;
-        p1loc = p1obj.transform.position;
-        p2loc = p2obj.transform.position;
+        if (p2obj != null) { playerObjectList.Add(p2obj); }
         // Get self components
         rb = GetComponent<Rigidbody2D>();
         tf = GetComponent<Transform>();
@@ -47,12 +39,17 @@ public class ReticleMovement : MonoBehaviour {
 	void Update () {
         forceModVertical = 0;
         forceModHorizontal = 0;
-		p1percent = p1vals.percentage;
-        p2percent = p2vals.percentage;
-        p1loc = p1obj.transform.position;
-        p2loc = p2obj.transform.position;
-        forceModVertical = BaseMoveSpeed * ((Mathf.Sign(tf.position.y - p1loc.y) * p1percent) + (Mathf.Sign(tf.position.y - p2loc.y) * p2percent));
-        forceModHorizontal = BaseMoveSpeed * ((Mathf.Sign(tf.position.x - p1loc.x) * p1percent) + (Mathf.Sign(tf.position.x - p2loc.x) * p2percent));
+        HighestPercent = 0;
+        foreach (GameObject player in playerObjectList)
+        {
+            forceModVertical += (Mathf.Sign(tf.position.y - player.transform.position.y) * player.GetComponent<PlayerValues>().percentage);
+            forceModHorizontal += (Mathf.Sign(tf.position.x - player.transform.position.x) * player.GetComponent<PlayerValues>().percentage);
+            // Update highest percentage
+            if (player.GetComponent<PlayerValues>().percentage > HighestPercent) { HighestPercent = player.GetComponent<PlayerValues>().percentage; }
+        }
+        BaseMoveSpeed = 1f + (HighestPercent / 5f);
+        forceModVertical = BaseMoveSpeed * forceModVertical;
+        forceModHorizontal = BaseMoveSpeed * forceModHorizontal;
         rb.AddForce(Vector2.left * forceModHorizontal * Time.deltaTime);
         rb.AddForce(Vector2.down * forceModVertical * Time.deltaTime);
 
@@ -73,9 +70,12 @@ public class ReticleMovement : MonoBehaviour {
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (timer <= 0.1)
-        {
-            Destroy(collision.gameObject);
+        GameObject obj = collision.gameObject;
+        if (timer <= 0.1) {
+            if (obj.tag == "Player"){
+                playerObjectList.Remove(obj);
+                Destroy(obj);
+            }
         }
     }
 }

@@ -398,6 +398,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   percentage: 50
+  infectTimer: 1
 --- !u!1 &305676588
 GameObject:
   m_ObjectHideFlags: 0
@@ -408,8 +409,8 @@ GameObject:
   - component: {fileID: 305676591}
   - component: {fileID: 305676590}
   - component: {fileID: 305676589}
-  - component: {fileID: 305676592}
   - component: {fileID: 305676593}
+  - component: {fileID: 305676592}
   m_Layer: 0
   m_Name: Reticle
   m_TagString: Untagged
@@ -491,7 +492,7 @@ Transform:
   m_GameObject: {fileID: 305676588}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -1.01, y: -5.21, z: 0}
-  m_LocalScale: {x: 5, y: 5, z: 1}
+  m_LocalScale: {x: 10, y: 10, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 9
@@ -509,8 +510,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BaseMoveSpeed: 10
   timer: 0
---- !u!61 &305676593
-BoxCollider2D:
+--- !u!58 &305676593
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
@@ -522,18 +523,8 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
-    newSize: {x: 1, y: 1}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
-  m_EdgeRadius: 0
+  m_Radius: 0.5
 --- !u!1001 &348200279
 Prefab:
   m_ObjectHideFlags: 0
@@ -634,6 +625,16 @@ Prefab:
     - target: {fileID: 1869734931049226, guid: 28dbd3650c6921748ac07d5b69a9fb5b, type: 2}
       propertyPath: m_Name
       value: hospitalHeal (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 224754077675890354, guid: 28dbd3650c6921748ac07d5b69a9fb5b,
+        type: 2}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224754077675890354, guid: 28dbd3650c6921748ac07d5b69a9fb5b,
+        type: 2}
+      propertyPath: m_AnchorMax.y
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 28dbd3650c6921748ac07d5b69a9fb5b, type: 2}
@@ -34049,6 +34050,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   percentage: 50
+  infectTimer: 1
 --- !u!1 &1003982171
 GameObject:
   m_ObjectHideFlags: 0
@@ -34500,6 +34502,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7ae21151ae74504da40de0118531d1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerArr: []
+  playerList: []
   cameraEdgePadding: 2
   minZoom: 5
   maxZoom: 50

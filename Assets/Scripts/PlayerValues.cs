@@ -5,5 +5,16 @@ using UnityEngine;
 public class PlayerValues : MonoBehaviour {
 
     public int percentage;
+    public float infectTimer;
+
+    void Update()
+    {
+        infectTimer -= Time.deltaTime;
+        if (infectTimer <= 0)
+        {
+            if (percentage + 1 < 100) { percentage++; } else { percentage = 100; }
+            infectTimer = 1;
+        }
+    }
 
 }
