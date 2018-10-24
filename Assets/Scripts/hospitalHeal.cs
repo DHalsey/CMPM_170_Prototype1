@@ -35,6 +35,10 @@ public class hospitalHeal : MonoBehaviour {
             currentHeals += rechargeRate * Time.deltaTime;
             UpdateHealBar();
         }
+        //avoid reacharging past cap
+        if (currentHeals > maxHeals) {
+            currentHeals = maxHeals;
+        }
     }
 
     private float timeSinceHeal = 0;
