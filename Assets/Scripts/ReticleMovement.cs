@@ -67,7 +67,7 @@ public class ReticleMovement : MonoBehaviour {
 
     // Timer
     private void OnGUI() {
-        GUI.Label(new Rect(1000, 10, 100, 20), "" + timer);
+        GUI.Label(new Rect(500, 10, 100, 20), "" + timer);
     }
 
     private void OnTriggerStay2D(Collider2D collision)

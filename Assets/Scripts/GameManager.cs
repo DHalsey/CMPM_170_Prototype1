@@ -14,15 +14,15 @@ public class GameManager : MonoBehaviour {
         if (gameOver == false) 
         {
             Debug.Log("End of Game");
-            if (p1 == null && p2 != null) 
+            if (p1 != null) 
+            {
+                SceneManager.LoadScene("EndScene1");
+            } else 
             {
                 SceneManager.LoadScene("EndScene2");
             }
-            else 
-            {
-                SceneManager.LoadScene("EndScene1");
-            }
+            gameOver = true;
         }
-    }
+    }   
 
 }
