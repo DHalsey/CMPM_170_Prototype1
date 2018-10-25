@@ -57,9 +57,11 @@ public class ReticleMovement : MonoBehaviour {
         {
             timer -= Time.deltaTime;
         }
-        else if (timer <= 0)
+        
+        if (timer <= 0 || playerObjectList.Count == 1)
         {
-            timer = 30;
+            FindObjectOfType<GameManager>().EndGame();
+            //timer = 30;
         }
     }
 
