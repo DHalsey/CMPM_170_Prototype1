@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class movePlayer : MonoBehaviour {
     public int player;
+    public Transform wall;
     private Rigidbody2D rb; //the rigidbody of the player
     private SpriteRenderer sr; //the sprite renderer of the player
-    private bool keyLeft, keyRight, keyUp, keyDown;
+    private bool keyLeft, keyRight, keyUp, keyDown, keyItem;
     private float movementSpeed = 4000.0f;
-    public int player1score, player2score;
     private GameObject p1, p2;
 
 	// Use this for initialization
@@ -34,11 +34,13 @@ public class movePlayer : MonoBehaviour {
             keyRight = Input.GetKey(KeyCode.D);
             keyUp = Input.GetKey(KeyCode.W);
             keyDown = Input.GetKey(KeyCode.S);
+            keyItem = Input.GetKey(KeyCode.Space);
         } else if (player == 2) { // if this is player 2, get player 2 controls
             keyLeft = Input.GetKey(KeyCode.LeftArrow);
             keyRight = Input.GetKey(KeyCode.RightArrow);
             keyUp = Input.GetKey(KeyCode.UpArrow);
             keyDown = Input.GetKey(KeyCode.DownArrow);
+            keyItem = Input.GetKey(KeyCode.Keypad0);
         }
     }
 
@@ -59,25 +61,39 @@ public class movePlayer : MonoBehaviour {
         if (keyDown == true) {
             rb.AddForce(Vector2.down*movementSpeed * Time.deltaTime);
         }
+        if (keyItem == true && GetComponent<PlayerValues>().hasBox == true)
+        {
+            Instantiate(wall, this.gameObject.transform.position, Quaternion.identity);
+            GetComponent<PlayerValues>().hasBox = false;
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.CompareTag("PickUp"))
         {
+            GameObject obj = other.gameObject;
             if (player == 1)
             {
-                other.gameObject.GetComponent<BoxCollider2D>().enabled = false;
-                other.gameObject.GetComponent<SpriteRenderer>().enabled = false;
-                other.gameObject.GetComponent<itemScript>().timer = Random.Range(10, 20);
-                player1score++;
-                if (p1.GetComponent<PlayerValues>().percentage - 10 > 0) { p1.GetComponent<PlayerValues>().percentage -= 10; } else { p1.GetComponent<PlayerValues>().percentage = 0; }
+                if (obj.name == "Medkit(Clone)")
+                {
+                    if (p1.GetComponent<PlayerValues>().percentage - 10 > 0) { p1.GetComponent<PlayerValues>().percentage -= 10; } else { p1.GetComponent<PlayerValues>().percentage = 0; }
+                }
+                else if (obj.name == "Box(Clone)")
+                {
+                    if (p1.GetComponent<PlayerValues>().hasBox == false) { p1.GetComponent<PlayerValues>().hasBox = true; }
+                }
+                Destroy(obj);
             } else if (player == 2) {
-                other.gameObject.GetComponent<BoxCollider2D>().enabled = false;
-                other.gameObject.GetComponent<SpriteRenderer>().enabled = false;
-                other.gameObject.GetComponent<itemScript>().timer = Random.Range(10, 20);
-                player2score++;
-                if (p2.GetComponent<PlayerValues>().percentage - 10 > 0) { p2.GetComponent<PlayerValues>().percentage -= 10; } else { p2.GetComponent<PlayerValues>().percentage = 0; }
+                if (obj.name == "Medkit(Clone)")
+                {
+                    if (p2.GetComponent<PlayerValues>().percentage - 10 > 0) { p2.GetComponent<PlayerValues>().percentage -= 10; } else { p2.GetComponent<PlayerValues>().percentage = 0; }
+                }
+                else if (obj.name == "Box(Clone)")
+                {
+                    if (p2.GetComponent<PlayerValues>().hasBox == false) { p2.GetComponent<PlayerValues>().hasBox = true; }
+                }
+                Destroy(obj);
             }
         }
     }

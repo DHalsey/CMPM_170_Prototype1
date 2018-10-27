@@ -6,6 +6,7 @@ public class PlayerValues : MonoBehaviour {
 
     public int percentage;
     public float infectTimer;
+    public bool hasBox;
 
     void Update()
     {
