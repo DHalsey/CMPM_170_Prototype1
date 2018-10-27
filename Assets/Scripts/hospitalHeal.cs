@@ -5,12 +5,12 @@ using UnityEngine;
 
 public class hospitalHeal : MonoBehaviour {
     public Slider slider;
-    private float maxHeals = 100; //the max healing the hospital can hold at one time
-    private float currentHeals = 100;
+    private float maxHeals = 40; //the max healing the hospital can hold at one time
+    private float currentHeals = 40;
     private float healsPerTick = 10; //amount healed per tick
     private float tickSpeed = 1; //ticks per second
     private float rechargeDelay = 5; //in seconds
-    private float rechargeRate = 10; //the recharge rate of heals per second that the hospital will gain
+    private float rechargeRate = 8; //the recharge rate of heals per second that the hospital will gain
     private float timeSinceEmpty = 0;// the time (in seconds) that the hospital has not been occupied by a player
     private List<GameObject> playerObjectList = new List<GameObject>(); // a list of players in the heal
 	// Use this for initialization
