@@ -53,15 +53,13 @@ public class ReticleMovement : MonoBehaviour {
         rb.AddForce(Vector2.left * forceModHorizontal * Time.deltaTime);
         rb.AddForce(Vector2.down * forceModVertical * Time.deltaTime);
 
-        if (timer > 0)
+        if (timer - Time.deltaTime > 0)
         {
             timer -= Time.deltaTime;
         }
-        
-        if (timer <= 0 || playerObjectList.Count == 1)
+        else
         {
-            FindObjectOfType<GameManager>().EndGame();
-            //timer = 30;
+            timer = 30;
         }
     }
 
@@ -77,6 +75,10 @@ public class ReticleMovement : MonoBehaviour {
             if (obj.tag == "Player"){
                 playerObjectList.Remove(obj);
                 Destroy(obj);
+            }
+            if (playerObjectList.Count == 1)
+            {
+                FindObjectOfType<GameManager>().EndGame();
             }
         }
     }
