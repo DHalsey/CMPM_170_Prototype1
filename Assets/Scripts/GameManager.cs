@@ -28,13 +28,13 @@ public class GameManager : MonoBehaviour {
         {
             if (nextItem == 0)
             {
-                Instantiate(medkit, new Vector3(Random.Range(-40,30), Random.Range(-45, 35), 0), Quaternion.identity);
+                Instantiate(medkit, new Vector3(Random.Range(-45,40), Random.Range(-45, 35), 0), Quaternion.identity);
             }
             if (nextItem == 1)
             {
-                Instantiate(box, new Vector3(Random.Range(-40, 30), Random.Range(-45, 35), 0), Quaternion.identity);
+                Instantiate(box, new Vector3(Random.Range(-45, 40), Random.Range(-45, 35), 0), Quaternion.identity);
             }
-            timer = Random.Range(3, 7);
+            timer = Random.Range(2, 3);
             nextItem = Random.Range(0, 2);
         }
     }
